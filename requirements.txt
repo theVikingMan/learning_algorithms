@@ -1,0 +1,15 @@
+# Core packages
+numpy
+pandas
+scikit-learn
+
+# Plotting and visualization
+matplotlib
+seaborn
+
+# Jupyter notebook
+jupyter
+
+# Additional useful libraries
+scipy
+statsmodels
