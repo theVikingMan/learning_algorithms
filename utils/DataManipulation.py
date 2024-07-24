@@ -3,9 +3,17 @@ import numpy as np
 
 from sklearn import model_selection, preprocessing, linear_model, metrics
 
+def mean_normalization(data):
+    return (data - data.mean()) / (data.max() - data.min())
 
-def kfold(k: int, data: pd.DataFrame, SEED: int):
+
+def z_score_normalization(data):
+    return (data - data.mean()) / (data.std())
+
+
+def kfold(X_train: pd.DataFrame, y_train: pd.DataFrame, k: int, SEED: int=42):
     folds = []
+    data = pd.concat([X_train, y_train], axis=1)
     randomized_data = data.sample(frac=1, random_state=SEED)
     n, m = randomized_data.shape
     fold_size = n // k
@@ -14,10 +22,10 @@ def kfold(k: int, data: pd.DataFrame, SEED: int):
         val_start = i * fold_size
         val_end = ((i + 1) * fold_size) if i != k - 1 else n
 
-        X_train = np.concatenate((randomized_data[:val_start], randomized_data[val_end:]), axis=0)
-        y_val = randomized_data[val_start:val_end]
+        train_data = np.concatenate((randomized_data[:val_start], randomized_data[val_end:]), axis=0)
+        val_data = randomized_data[val_start:val_end]
 
-        folds.append((X_train, y_val))
+        folds.append((train_data, val_data))
 
     return folds
 
