@@ -22,7 +22,7 @@ def kfold(X_train: pd.DataFrame, y_train: pd.DataFrame, k: int, SEED: int=42):
         val_start = i * fold_size
         val_end = ((i + 1) * fold_size) if i != k - 1 else n
 
-        train_data = np.concatenate((randomized_data[:val_start], randomized_data[val_end:]), axis=0)
+        train_data = pd.concat((randomized_data[:val_start], randomized_data[val_end:]), axis=0)
         val_data = randomized_data[val_start:val_end]
 
         folds.append((train_data, val_data))
